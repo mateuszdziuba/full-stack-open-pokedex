@@ -13,11 +13,21 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
-      sourceType: "module",
-      allowImportExportEverywhere: true,
     },
+    sourceType: "module",
+    allowImportExportEverywhere: true,
     ecmaVersion: 2018,
   },
   plugins: ["react"],
-  rules: {},
+  rules: {
+    "react/prop-types": "off",
+  },
+  overrides: [
+    {
+      files: ["**/*.spec.js", "**/*.spec.jsx"],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };
