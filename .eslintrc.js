@@ -4,6 +4,7 @@ module.exports = {
     commonjs: true,
     es6: true,
     node: true,
+    "cypress/globals": true,
   },
   extends: ["eslint:recommended", "plugin:react/recommended"],
   globals: {
@@ -18,7 +19,7 @@ module.exports = {
     allowImportExportEverywhere: true,
     ecmaVersion: 2018,
   },
-  plugins: ["react"],
+  plugins: ["react", "jest", "cypress"],
   rules: {
     "react/prop-types": "off",
   },
