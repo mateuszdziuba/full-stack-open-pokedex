@@ -47,6 +47,7 @@ jobs:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
           args: Build succeeded.
+      - name: build fails
         if: ${{ failure( )}}
         uses: appleboy/discord-action@master
         with:
@@ -63,7 +64,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-
-
-
-
