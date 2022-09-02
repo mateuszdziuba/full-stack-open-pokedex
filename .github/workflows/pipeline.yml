@@ -45,7 +45,10 @@ jobs:
         with:
           webhook_id: ${{ secrets.WEBHOOK_ID }}
           webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-          args: The ${{ github.event_name }} event triggered first step.
+          if: ${{ success() }}
+            args: Build succeeded.
+          if: ${{ failure( )}}
+            args: Build failed.
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
@@ -56,3 +59,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+
+
+
+
