@@ -40,6 +40,12 @@ jobs:
           healthcheck: "https://fullstack-open-pokedex-pl.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
+      - name: send custom message with args
+        uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.WEBHOOK_ID }}
+          webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+          args: The ${{ github.event_name }} event triggered first step.
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
