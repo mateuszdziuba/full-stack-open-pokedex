@@ -9,42 +9,42 @@ on:
     types: [opened, synchronize]
 
 jobs:
-    simple_deployment_pipeline:
-      if: ${{ github.event_name == 'push' }}
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v2
-          with:
-            node-version: "16"
-        - name: npm install
-          run: npm install
-        - name: lint
-          run: npm run eslint
-        - name: build
-          run: npm run build
-        - name: test
-          run: npm test
-        # - name: e2e tests
-        #   uses: cypress-io/github-action@v4
-        #   with:
-        #     command: npm run test:e2e
-        #     start: npm run start-prod
-        #     wait-on: http://localhost:5000
-        #     config-file: cypress.config.js
-        - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-          with:
-            heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-            heroku_app_name: "fullstack-open-pokedex-pl" #Must be unique in Heroku
-            heroku_email: "mdziubek7@gmail.com"
-            healthcheck: "https://fullstack-open-pokedex-pl.herokuapp.com/health"
-            checkstring: "ok"
-            rollbackonhealthcheckfailed: true
-    tag_release:
-      needs: [simple_deployment_pipeline]
-      runs-on: ubuntu-20.04
-      steps:
-        - name: Bump version and push tag
+  simple_deployment_pipeline:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: npm install
+        run: npm install
+      - name: lint
+        run: npm run eslint
+      - name: build
+        run: npm run build
+      - name: test
+        run: npm test
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v4
+      #   with:
+      #     command: npm run test:e2e
+      #     start: npm run start-prod
+      #     wait-on: http://localhost:5000
+      #     config-file: cypress.config.js
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "fullstack-open-pokedex-pl" #Must be unique in Heroku
+          heroku_email: "mdziubek7@gmail.com"
+          healthcheck: "https://fullstack-open-pokedex-pl.herokuapp.com/health"
+          checkstring: "ok"
+          rollbackonhealthcheckfailed: true
+  tag_release:
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
