@@ -44,6 +44,10 @@ jobs:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-20.04
     steps:
+      - name: check where am i
+        run: ls
+      - name: check if there is git
+        run: ls .git
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.39.0
         env:
